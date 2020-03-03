@@ -1,0 +1,110 @@
+@cn.page.main("酒醅风味信息") {
+
+    <style>
+        .table > thead > tr > th {
+            text-align: center;
+        }
+
+        .table > tbody > tr > td {
+            text-align: center;
+        }
+
+</style>
+
+
+            <div class="row">
+                <div class="form-group col-sm-12">
+                    <h2 class="page-heading">酒醅风味信息</h2>
+                </div>
+            </div>
+
+
+            <ul class="nav nav-tabs" style="margin-top: 20px">
+                <li role="presentation" id="paste-tab" class="active"><a data-toggle="tab" onclick="SwitchFlavor('jiangxiang')">
+                    酱香</a></li>
+                <li role="presentation" id="upload-tab"><a data-toggle="tab" onclick="SwitchFlavor('qingxiang')">
+                    清香</a></li>
+            </ul>
+
+            <div style="margin-top: 10px;">
+
+                <p><b>风味数据：</b></p>
+                <div id="common" class="checkbox"></div>
+                <p><b>样品：</b></p>
+                <div id="sample" class="checkbox"></div>
+            </div>
+            <div id="toolbar">
+                &nbsp;
+                Keyword：
+            </div>
+            <table class="display table table-bordered" id="table" data-pagination="true" data-search="true"
+            data-toolbar="#toolbar" data-page-list="[10, 25, 50, 100, all]" data-search-align="left" data-multiple-search="true">
+                <thead>
+                    <tr id="id">
+
+                    </tr>
+                </thead>
+            </table>
+
+
+
+            <script>
+
+            $(function () {
+
+               SwitchFlavor("jiangxiang")
+
+            })
+
+            function SwitchFlavor(obj) {
+                $("#table").bootstrapTable('destroy');
+                $("#id").empty();
+                $.ajax({
+                    url: "/CN/brew/Flavor/getData?flavor=" + obj,
+                    type: "post",
+                    success: function (data) {
+
+                        var common = "";
+                        var th = ""
+                        $.each(data.head,function (i,v) {
+                            common += "<label style='margin-right: 15px'>" +
+                                    "<input type='checkbox' checked='checked' value='" + i + "' onclick='setColumns(\"" + i
+                                    + "\")')\">" + v +
+                                    "</label>";
+                            th += "<th data-field='" + i +"' data-sortable='true'>" + v + "</th>"
+                        });
+
+                        $("#common").html(common);
+
+                        var sample = "";
+                        $.each(data.sample,function (i,v) {
+                            sample += "<label style='margin-right: 15px'>" +
+                                    "<input type='checkbox' checked='checked' value='" + i + "' onclick='setColumns(\"" + i
+                                    + "\")')\">" + v +
+                                    "</label>";
+                            th += "<th data-field='" + i +"' data-sortable='true'>" + v + "</th>"
+                        });
+
+                        $("#sample").html(sample);
+
+                        $("#id").html(th);
+
+
+
+                        $("#table").bootstrapTable({data: data.datas});
+
+                        $.each(data.sample, function (n, value) {
+                                    $('#table').bootstrapTable('hideColumn', value);
+                                    $("input:checkbox[value=" + value + "]").attr("checked", false)
+                                }
+                        );
+
+
+                    }
+                })
+
+
+
+            }
+    </script>
+}

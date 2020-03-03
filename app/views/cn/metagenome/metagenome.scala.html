@@ -1,0 +1,121 @@
+@cn.page.main("宏基因组数据") {
+
+    <style>
+            .table > thead > tr > th {
+                text-align: center;
+            }
+
+            .table > tbody > tr > td {
+                text-align: center;
+            }
+
+
+    </style>
+
+
+    <div class="row">
+        <div class="form-group col-sm-12">
+            <h2 class="page-heading">宏基因组数据</h2>
+        </div>
+    </div>
+
+
+
+    <ul class="nav nav-tabs" style="margin-top: 20px">
+        <li role="presentation" id="paste-tab" class="active"><a data-toggle="tab" onclick="SwitchFlavor('jiangxiang')">
+            酱香</a></li>
+        <li role="presentation" id="upload-tab"><a data-toggle="tab" onclick="SwitchFlavor('mixiang')">
+            米香</a></li>
+        <li role="presentation" id="upload-tab"><a data-toggle="tab" onclick="SwitchFlavor('nongxiang')">
+            浓香</a></li>
+        <li role="presentation" id="upload-tab"><a data-toggle="tab" onclick="SwitchFlavor('qingxiang')">
+            清香</a></li>
+    </ul>
+
+    <div id="check" class="checkbox"></div>
+
+
+
+    <table class="display table table-bordered" id="table" data-pagination="true" data-search="true"
+    data-toolbar="#toolbar" data-page-list="[10, 25, 50, 100]" data-search-align="left" data-multiple-search="true">
+        <thead>
+            <tr>
+                <th data-field="code" data-sortable='true'>编号</th>
+                <th data-field="flavor" data-sortable='true'>香型</th>
+                <th data-field="source" data-sortable='true'>样本来源</th>
+                <th data-field="sampleCode" data-sortable='true'>样品编号</th>
+                <th data-field="textCode" data-sortable='true'>文库编号</th>
+                <th data-field="sampleInfo" data-sortable='true'>样品信息</th>
+                <th data-field="time" data-sortable='true'>采样时间</th>
+                <th data-field="location" data-sortable='true'>采样地点</th>
+                <th data-field="dataType" data-sortable='true'>数据类型</th>
+                <th data-field="seqPlat" data-sortable='true'>测序平台</th>
+                <th data-field="seqMethod" data-sortable='true'>测序方法</th>
+                <th data-field="primer" data-sortable='true'>扩增引物</th>
+                <th data-field="seqType" data-sortable='true'>建库类型</th>
+                <th data-field="textInfo" data-sortable='true'>相关文章信息</th>
+            </tr>
+        </thead>
+
+    </table>
+    <script>
+
+
+
+            var datas = [];
+            $(function () {
+                var field = ["flavor", "source", "sampleCode", "textCode", "sampleInfo", "time", "location", "dataType", "seqPlat",
+                    "seqMethod", "primer", "seqType", "textInfo"];
+                var title = ["香型", "样本来源", "样品编号", "文库编号", "样品信息", "采样时间", "采样地点", "数据类型", "测序平台",
+                    "测序方法", "扩增引物", "建库类型", "相关文章信息"];
+
+                var checkbox = "";
+                $.each(field, function (i, v) {
+                    checkbox += "<label style='margin-right: 15px'>" +
+                            "<input type='checkbox' checked='checked' value='" + v + "' onclick='setColumns(\"" + v
+                            + "\")')\">" + title[i] +
+                            "</label>";
+                });
+
+                $("#check").html(checkbox);
+
+
+                $.ajax({
+                    url: "/CN/brew/Meta/getAllMeta",
+                    type: "post",
+                    success: function (data) {
+                        datas = data;
+                        SwitchFlavor("jiangxiang");
+
+                    }
+                });
+
+
+            });
+
+            function SwitchFlavor(obj) {
+                $("#table").bootstrapTable('destroy');
+                if (obj === "jiangxiang") {
+                    $("#table").bootstrapTable({data: datas.jiangxiang})
+                } else if (obj === "mixiang") {
+                    $("#table").bootstrapTable({data: datas.mixiang})
+                } else if (obj === "nongxiang") {
+                    $("#table").bootstrapTable({data: datas.nongxiang})
+                } else {
+                    $("#table").bootstrapTable({data: datas.qingxiang})
+                }
+
+                var hide = ["flavor", "time", "seqPlat", "textInfo"];
+                $.each(hide, function (n, value) {
+                            $('#table').bootstrapTable('hideColumn', value);
+                            $("input:checkbox[value=" + value + "]").attr("checked", false)
+                        }
+                );
+
+
+            }
+
+
+
+    </script>
+}

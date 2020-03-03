@@ -1,0 +1,390 @@
+@cn.page.main("各酒厂地理位置") {
+
+    <script src="@routes.Assets.versioned("Highmaps-6.1.0/highmaps.js")" type="text/javascript"></script>
+@*   // <script src="@routes.Assets.versioned("Highmaps-6.1.0/jquery-1.8.3.min.js")" type="text/javascript"></script>*@
+
+    <script src="@routes.Assets.versioned("Highmaps-6.1.0/china.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.versioned("Highmaps-6.1.0/proj4.js")" type="text/javascript"></script>
+
+
+    <style>
+            .qx {
+                color: #479E40;
+                margin-right: 10px;
+            }
+
+            .nx {
+                color: blue;
+                margin-right: 10px;
+            }
+
+
+            .jx {
+                color: red;
+                margin-right: 10px;
+            }
+
+            .mx {
+                color: #D09887;
+                margin-right: 10px;
+            }
+
+    </style>
+
+
+    <div class="row">
+        <div class="form-group col-sm-12">
+            <h2 class="page-heading">各酒厂地理位置</h2>
+        </div>
+    </div>
+
+    <div id="brewMap" style="height: 550px;"></div>
+
+
+        <div id="result" style="display: none
+        ">
+            <div id="check" class="checkbox"></div>
+    <table class="display table table-bordered" id="table" data-pagination="true" data-search="true"
+    data-toolbar="#toolbar" data-page-list="[10, 25, 50, 100]" data-search-align="left" data-multiple-search="true">
+        <thead>
+            <tr>
+                <th data-field="code" data-sortable='true'>编号</th>
+                <th data-field="flavor" data-sortable='true'>香型</th>
+                <th data-field="source" data-sortable='true'>样本来源</th>
+                <th data-field="sampleCode" data-sortable='true'>样品编号</th>
+                <th data-field="textCode" data-sortable='true'>文库编号</th>
+                <th data-field="sampleInfo" data-sortable='true'>样品信息</th>
+                <th data-field="time" data-sortable='true'>采样时间</th>
+                <th data-field="location" data-sortable='true'>采样地点</th>
+            </tr>
+        </thead>
+
+    </table>
+</div>
+
+    <script>
+
+
+            $(function () {
+                $.getJSON('/CN/brew/Map/getChinaJson', function (chinaCity) {
+
+                    var map = new Highcharts.Map('brewMap', {
+                        title: {
+                            text: '各酒厂地理位置'
+                        },
+                        mapNavigation: {
+                            enabled: true,
+                             enableMouseWheelZoom:false,
+                            buttonOptions: {
+                                verticalAlign: 'bottom'
+                            }
+                        },
+                        tooltip: {
+                            useHTML: true,
+
+
+                            formatter: function () {
+                                return "名称：" + this.point.name + "</br>风味：" + this.point.flavor +
+                                        "</br>公司：" + this.point.company + "</br>地址：" + this.point.location +
+                                        "</br>经纬度：" + this.point.ll + "</br>样本量：" + this.point.samples;
+                            }
+                        },
+                        plotOptions: {
+                            series: {
+                                //悬浮显示
+                                stickyTracking: false,
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '{point.name}({point.samples})'
+                                },
+                                cursor: 'pointer',
+                                marker: {
+                                    radius: 5
+                                },
+                                events: {
+                                    //控制图标的图例legend不允许切换
+                                    legendItemClick: function (event) {
+                                        return false; //return  true 则表示允许切换
+                                    }
+                                }
+                            }
+                        },
+                        legend: {
+                            align: 'right',
+                            backgroundColor: 'white',
+                            floating: true,
+                            layout: 'vertical',
+                            verticalAlign: 'bottom',
+                            itemStyle:{
+                            cursor: 'default'
+
+                            },
+                            x: -150,
+                            y: -150,
+                            useHTML: false
+                        },
+                        series: [{
+                            // 空数据列，用于展示底图
+                            mapData: Highcharts.maps['cn/china'],
+                            dataLabels: {
+                                enabled: false,
+                            },
+                            showInLegend: false
+                        }, {
+                            type: 'mappoint',
+                            name: '清香',
+                            color: '#479E40',
+                            data: [{
+                                // 经纬度查询请到 http://www.gpsspg.com/maps.htm
+                                lat: 37.33462,
+                                lon: 111.90987,
+                                name: '汾酒',
+                                flavor: "清香",
+                                company: "山西杏花村汾酒厂股份有限公司",
+                                samples: "42",
+                                location: "山西省汾阳市杏花村镇",
+                                ll: "[37°20'14.1\"N ,111°54'04.8\"E]"
+
+                            }, {
+                                // 经纬度查询请到 http://www.gpsspg.com/maps.htm
+                                lat: 37.7381951118,
+                                lon: 115.663122622,
+                                name: '老白干',
+                                flavor: "清香",
+                                company: "河北衡水老白干酒业股份有限公司",
+                                samples: "60",
+                                location: "河北省衡水市",
+                                ll: "[37°49'14.3\"N ,115°42'42.8\"E]",
+                                dataLabels: {
+                                    align: "left",
+                                    enabled: true,
+                                    format: '{point.name}({point.samples})'
+                                }
+
+                            }, {
+                                // 经纬度查询请到 http://www.gpsspg.com/maps.htm
+                                lat: 36.83633,
+                                lon: 101.966,
+                                flavor: "清香",
+                                name: '青稞酒',
+                                company: "青海互助青稞酒股份有限公司",
+                                samples: "18",
+                                location: "青海省互助县威远镇",
+                                ll: "[36°50'17.3\"N ,101°57'51.9\"E]"
+
+                            }],
+
+                            point:{
+                                events:{
+                                click:function() {
+                                 getData(this.name);
+                                }}
+                            }
+                        }, {
+                            type: 'mappoint',
+                            name: '浓香',
+                            color: 'blue',
+
+                            data: [{
+                                // 经纬度查询请到 http://www.gpsspg.com/maps.htm
+                                lat: 28.7551577751,
+                                lon: 104.6406244887,
+                                name: '五粮液',
+                                flavor: "浓香",
+                                company: "四川省宜宾五粮液集团有限公司",
+                                samples: "35",
+                                location: "四川省宜宾市",
+                                ll: "[28°47'37.8\"N ,104°35'47.2\"E]",
+                                dataLabels: {
+                                    align: "right",
+                                    enabled: true,
+                                    format: '{point.name}({point.samples})'
+                                }
+
+                            }, {
+                                // 经纬度查询请到 http://www.gpsspg.com/maps.htm
+                                lat: 31.3377600000,
+                                lon: 104.2208300000,
+                                name: '剑南春',
+                                flavor: "浓香",
+                                company: "四川剑南春(集团)有限责任公司",
+                                samples: "29",
+                                location: "四川省绵竹市",
+                                ll: "[31°20'10.3\"N ,104°11'07.9\"E]"
+
+                            }, {
+                                // 经纬度查询请到 http://www.gpsspg.com/maps.htm
+                                lat: 30.9428702884,
+                                lon: 118.75382127,
+                                name: '宣酒',
+                                flavor: "浓香",
+                                company: "安徽宣酒集团股份有限公司",
+                                samples: "13",
+                                location: "安徽省宣城市",
+                                ll: "[30°58'02.8\"N ,118°45'00.6\"E]"
+
+                            }],
+
+                            point:{
+                                events:{
+                                click:function() {
+
+
+                                    getData(this.name);
+
+
+                                }}
+                            }
+                        }, {
+                            type: 'mappoint',
+                            name: '酱香',
+                            color: 'red',
+
+                            data: [{
+                                // 经纬度查询请到 http://www.gpsspg.com/maps.htm
+                                lat: 27.85208,
+                                lon: 106.375578,
+                                name: '茅台',
+                                flavor: "酱香",
+                                company: "中国贵州茅台酒厂(集团)有限责任公司",
+                                samples: "238",
+                                location: "贵州省仁怀市茅台镇",
+                                ll: "[27°50'44.6\"N ,106°22'14.7\"E]",
+                                dataLabels: {
+                                    align: "left",
+                                    verticalAlign: "top",
+                                    enabled: true,
+                                    format: '{point.name}({point.samples})'
+                                }
+
+                            }, {
+                                // 经纬度查询请到 http://www.gpsspg.com/maps.htm
+                                lat: 28.16037,
+                                lon: 106.1621,
+                                name: '习酒',
+                                flavor: "酱香",
+                                company: "贵州茅台酒厂（集团）习酒有限责任公司",
+                                samples: "36",
+                                location: "贵州省习水县习酒镇",
+                                ll: "[28°09'34.7\"N ,106°09'45.8\"E]",
+                                dataLabels: {
+                                    align: "left",
+                                    enabled: true,
+                                    format: '{point.name}({point.samples})'
+                                }
+
+                            }],
+
+                            point:{
+                                events:{
+                                click:function() {
+                                 getData(this.name);
+                                }}
+                            }
+                        }, {
+                            type: 'mappoint',
+                            name:'米香',
+                            color: '#D09887',
+
+                            data: [{
+                                // 经纬度查询请到 http://www.gpsspg.com/maps.htm
+                                lat: 25.2765178785,
+                                lon: 110.285425903,
+                                name: '桂林三花酒',
+                                flavor: "米香",
+                                company: "桂林三花股份有限公司",
+                                samples: "30",
+                                location: "广西省桂林市",
+                                ll: "[25°16'01.0\"N ,110°17'42.2\"E]",
+                                dataLabels: {
+                                    align: "left",
+                                    enabled: true,
+                                    format: '{point.name}({point.samples})'
+                                }
+
+                            }, {
+                                // 经纬度查询请到 http://www.gpsspg.com/maps.htm
+                                lat: 24.7830747589,
+                                lon: 108.9112260191,
+                                name: '天龙泉',
+                                flavor: "米香",
+                                company: "广西天龙泉酒业有限公司",
+                                samples: "36",
+                                location: "广西省罗城县",
+                                ll: "[24°47'52.1\"N ,108°56'12.4\"E]",
+                                dataLabels: {
+                                    align: "right",
+                                    enabled: true,
+                                    verticalAlign: "top",
+                                    format: '{point.name}({point.samples})'
+                                }
+
+                            }, {
+                                // 经纬度查询请到 http://www.gpsspg.com/maps.htm
+                                lat: 23.0243440777,
+                                lon: 113.1164424334,
+                                name: '九江双蒸酒',
+                                flavor: "米香",
+                                company: "广东省九江酒厂有限公司",
+                                samples: "30",
+                                location: "广东省佛山市",
+                                ll: "[22°48'46.9\"N ,113°01'38.9\"E]",
+                                dataLabels: {
+                                    align: "left",
+                                    enabled: true,
+                                    format: '{point.name}({point.samples})'
+                                }
+
+                            }],
+
+                            point:{
+                                events:{
+                                click:function() {
+                                 getData(this.name);
+                                }}
+                            }
+                        }]
+                    });
+                });
+
+            })
+
+
+            function getData(obj) {
+                 var field = ["flavor", "source", "sampleCode", "textCode", "sampleInfo", "time", "location"];
+                var title = ["香型", "样本来源", "样品编号", "文库编号", "样品信息", "采样时间", "采样地点"];
+
+                var checkbox = "";
+                $.each(field, function (i, v) {
+                    checkbox += "<label style='margin-right: 15px'>" +
+                            "<input type='checkbox' checked='checked' value='" + v + "' onclick='setColumns(\"" + v
+                            + "\")')\">" + title[i] +
+                            "</label>";
+                });
+
+                $("#check").html(checkbox);
+
+
+                $.ajax({
+                    url: "/CN/brew/Meta/getByLocation?location=" + obj,
+                    type: "post",
+                    success: function (data) {
+
+                       $("#table").bootstrapTable('destroy');
+
+                    $("#table").bootstrapTable({data: data});
+
+                var hide = [ "time"];
+                $.each(hide, function (n, value) {
+                            $('#table').bootstrapTable('hideColumn', value);
+                            $("input:checkbox[value=" + value + "]").attr("checked", false)
+                        }
+                );
+
+                $("#result").show();
+                    }
+                });
+            }
+
+    </script>
+}

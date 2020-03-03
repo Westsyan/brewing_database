@@ -1,0 +1,36 @@
+@(title:String)
+<style>
+        .table>thead>tr>th {
+            text-align: center;
+        }
+        .table>tbody>tr>td{
+            text-align: center;
+        }
+
+</style>
+
+<div class="news" id="container">
+
+    <div class="container">
+        <h3 class="ttl">@title</h3>
+
+        <div class="grid_3 grid_5">
+            <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+
+                <div id="toolbar">
+                        &nbsp;Keyword：
+                </div>
+                <table class="display table table-bordered" id="table" data-pagination="true" data-search="true"
+                data-toolbar="#toolbar" data-page-list="[10, 25, 50, 100, all]" data-search-align="left" data-multiple-search="true">
+                    <thead>
+                        <tr>
+                            <th v-for="(value,name) in ths" :data-field="name" data-sortable="true">{{value}}</th>
+                        </tr>
+                    </thead>
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>

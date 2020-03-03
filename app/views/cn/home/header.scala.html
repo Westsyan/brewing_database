@@ -1,0 +1,95 @@
+<div class="header">
+    <div class="container">
+        <div class="header-logo">
+            <span style="font-family: 楷体;color:white;
+                font-size: 50px;">酿造数据库</span>
+        </div>
+        <div class="header-info" style="display: none;">
+            <p>Information Service:</p>
+            <h4>000-1234-1234</h4>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>
+
+<style>
+  .dropdown-menu li {
+        margin-left:0px !important;
+        width: 100%;
+    }
+
+    .dropdown-menu{
+        border-radius: 10px;
+    }
+
+    .drop1{
+        font-family: 华文楷体;
+        font-size: 1.6em !important;
+    }
+
+</style>
+
+<div class="header-bottom">
+    <div class="container">
+            <!--top-nav-->
+        <div class="top-nav cl-effect-5">
+            <ul class="nav1">
+                <li><a href="@routes.HomeController.index()" id="home"><span data-hover="主页">首页</span></a></li>
+                <li class="dropdown">
+                    <a href="#" class="header-title" id="genome"> <span data-hover="扩增子数据">扩增子数据</span></a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                        <li><a href="@routes.AmpController.to16S()" class="drop1">16S 数据</a></li>
+                        <li><a href="@routes.AmpController.ITS()" class="drop1">ITS 数据</a></li>
+                    </ul>
+                </li>
+
+
+                <li  class="dropdown">
+                    <a href="#" id="tools"> <span data-hover="风味信息">风味信息</span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="@routes.FlavorController.pcdata()" class="drop1">样品理化数据</a></li>
+                        <li><a href="@routes.FlavorController.macros()" class="drop1">宏转录组数据</a></li>
+                        <li><a href="@routes.FlavorController.cas()" class="drop1">单菌风味产物分析</a></li>
+                      @*  <li><a href="@routes.FlavorController.flavor()" class="drop1">白酒风味物质库</a></li>*@
+                    </ul>
+
+                </li>
+                <li  class="dropdown">
+                    <a href="#" id="download"> <span data-hover="菌株信息">菌株信息</span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="@routes.StrainController.strainInfo()" class="drop1">可培养菌株信息</a></li>
+                        <li><a href="@routes.StrainController.strainPhe()" class="drop1">菌株酶学表型</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" id="contact"> <span data-hover="实验室介绍">各酒厂地理位置</span></a></li>
+                <li><a href="#" id="contact"> <span data-hover="实验室介绍">实验室介绍</span></a></li>
+            </ul>
+        </div>
+            <!--//top-nav-->
+        <form class="navbar-form navbar-right" style="display: none">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search" style="border-color: #2C3E50">
+                <button type="submit" class="searchBtn btn-default"></button>
+            </div>
+        </form>
+        <div class="clearfix"> </div>
+    </div>
+</div>
+
+    <script>
+
+        $(function () {
+
+            $('[data-submenu]').submenupicker();
+
+            var href = window.location.href;
+            var array = href.split("/");
+            if(array.length < 6){
+                $("#home").addClass("active")
+            }else{
+                $("#" + array[4]).addClass("active");
+            }
+        })
+
+
+    </script>

@@ -1,0 +1,143 @@
+@cn.page.main("搜索菌种信息") {
+
+    <style>
+            .table > thead > tr > th {
+                text-align: center;
+            }
+
+            .table > tbody > tr > td {
+                text-align: center;
+            }
+
+    </style>
+
+
+    <div class="row">
+        <div class="form-group col-sm-12">
+            <h2 class="page-heading">搜索菌种信息</h2>
+        </div>
+    </div>
+
+
+    <div class="tabs-container">
+        <div class="tab-content">
+            <div class="tab-pane active" style="margin-top: 10px;">
+                <form class="form-horizontal" method="get" id="form">
+
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">中文名:</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" name="chinese" id="chinese" >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">拉丁名:</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" name="latin" id="latin" >
+                        </div>
+                    </div>
+
+                    <hr>
+                    <div class="form-group">
+                        <div class="actions col-sm-offset-3 col-sm-3">
+                            <button type="button" class="btn btn-primary" style="width: 90%;" id="search"
+                            onclick="Search()">
+                                搜索</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="result" style="display: none">
+
+        <div id="checbox" class="checkbox">
+            <label style='margin-right: 15px' v-for="(value,name) in ths">
+                <input type="checkbox" checked="checked" :value='name' :onclick='"setColumns(\""+ name +"\")"'>{{value}}
+            </label>
+
+        </div>
+        <table class="display table table-bordered" id="table" data-pagination="true"
+        data-page-list="[10, 25, 50, 100]" >
+            <thead>
+                <tr>
+                    <th v-for="(value,name) in ths" :data-field="name" data-sortable="true">{{value}}</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <script>
+
+            $(function () {
+
+                new Vue({
+                    el: "#result",
+                    data: {
+                        ths: {
+                            initial: "菌株名称首字母",
+                            chinese: "物种中文名称",
+                            latin: "物种拉丁文名称",
+                            speciesType: "物种类别",
+                            genus: "Genus",
+                            species: "Species",
+                            lamCode: "LAM菌种库统一编号",
+                            patent: "是否专利菌株",
+                            patentCode: "专利保藏编号",
+                            source: "来源",
+                            apply: "应用",
+                            feature: "特征",
+                            text: "相关论文或专利",
+                            notes: "备注",
+                        }
+                    }
+                });
+
+                /*                axios.post("
+                routes.StrainController.getAllStrain").then((data) => {
+                    $("#table").bootstrapTable({data: data.data});
+
+                    const hide = ["initial","apply","text","notes"];
+
+                    $.each(hide,function (i,v) {
+                        $('#table').bootstrapTable('hideColumn', v);
+                        $("input:checkbox[value=" + v + "]").attr("checked", false)
+                    })
+                });*/
+
+            })
+
+
+            function Search() {
+                $("#result").hide();
+                $.ajax({
+                    url: "@routes.StrainController.searchStrain()",
+                    type: "post",
+                    data: $("#form").serialize(),
+                    success: function (data) {
+                        if (data.valid == "false") {
+                            swal("警告", "请至少输入一个参数", "warning")
+                        } else {
+                            $("#table").bootstrapTable("destroy");
+                            $("#table").bootstrapTable({data: data.result});
+
+                            const hide = ["initial", "apply", "text", "notes"];
+
+                            $.each(hide, function (i, v) {
+                                $('#table').bootstrapTable('hideColumn', v);
+                                $("input:checkbox[value=" + v + "]").attr("checked", false)
+                            })
+
+                            $("#result").show();
+                        }
+                    }
+                })
+            }
+    </script>
+
+
+}

@@ -1,0 +1,356 @@
+@us.home.main("酿造微生物数据库平台") {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("font-awesome-5.11.2/css/fontawesome.min.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("font-awesome-5.11.2/css/brands.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("font-awesome-5.11.2/css/solid.css")">
+
+    <style>
+
+            body {
+
+            }
+
+            .thumbnail {
+                height: 200px;
+            }
+
+            .thumbnail > .row {
+                margin-top: 12px;
+            }
+
+            .navbrew {
+                text-align: center;
+                background-color: white;
+                width: 180px;
+                height: 100px;
+            }
+
+            .navbrew a {
+                line-height: 35px;
+            }
+
+            .navbrew a i {
+                font-size: 30px !important;
+                margin-top: 15px;
+                color: #0F8A54;
+            }
+
+            .navbrew-info {
+                margin-top: 30px;
+                background-color: white;
+            }
+
+            .navbrew-img {
+                width: 250px;
+                height: 200px;
+            }
+
+            .navbrew-a {
+                color: #333;
+            }
+
+            .navbrew-a:hover {
+                color: #0F8A54
+            }
+
+            .navbrew-fa {
+                color: #0F8A54
+            }
+
+            .navbrew-text {
+                padding: 20px;
+                width: 600px;
+                float: left;
+            }
+
+            .navbrew-stat {
+                width: 160px;
+                float: left;
+                padding: 55px 20px 20px 20px;
+            }
+
+            .navbrew-info ul li a:hover {
+                color: #0c8c42;
+                text-decoration: underline;
+            }
+
+            .navbrew-info ul li a {
+                color: #222;
+            }
+
+            .navbrew-info ul li a span {
+                color: #666;
+                font-style: italic;
+            }
+
+            .navbrew-info li {
+                border-bottom: 1px solid #e5e5e5;
+                font-size: 13px;
+                line-height: 22px;
+                padding: 8px 0px;
+            }
+
+            .archive ul li {
+                float: left;
+                border-right: 1px solid #e5e5e5;
+                border-bottom: none;
+                text-align: center;
+                padding: 0 28px;
+                margin-top: 60px;
+            }
+
+            .archive ul li:last-child {
+                border-right: none;
+            }
+
+            .col-md-12 {
+                padding: 0;
+            }
+
+            .ftorg{
+                margin-top: 20px;
+            }
+
+            .ftorg a {
+                color: #222;
+                font-size: 13px;
+                line-height: 22px;
+                background: #f4f4f4;
+                border-radius: 4px;
+                padding: 6px 10px;
+            }
+    </style>
+
+
+
+    <div class="col-md-12" style="margin-top: 50px;
+        padding-right: 10px;">
+
+
+        <div class="col-md-2 ">
+            <div class="navbrew">
+                <a href="@routes.BacteriaAmpliconController.bacteriaPage()" class="navbrew-a">
+                    <i class="fas fa-mars"></i>
+                    <h4>16S 数据</h4>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="navbrew">
+                <a href="@routes.FungusAmpliconController.fungusPage()" class="navbrew-a">
+                    <i class="fas fa-mars-double"></i>
+                    <h4>ITS 数据</h4>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-2" >
+            <div class="navbrew">
+                <a href="@routes.TransController.transPageBefore()" class="navbrew-a">
+                    <i class="fas fa-mars-stroke"></i>
+                    <h4>宏转录组数据</h4>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="navbrew">
+                <a href="@routes.PacController.pacPage()" class="navbrew-a">
+                    <i class="fas fa-mars-stroke-h"></i>
+                    <h4>理化数据</h4>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="navbrew">
+                <a href="@routes.FlavorController.flavor()" class="navbrew-a">
+                    <i class="fas fa-mars-stroke-v"></i>
+                    <h4>酒醅风味信息</h4>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="navbrew">
+                <a href="@routes.StrainController.strainPage()" target="_blank" class="navbrew-a">
+                    <i class="fas fa-transgender-alt"></i>
+                    <h4>菌种信息</h4>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-12 navbrew-info">
+        <div style="float: right;">
+            <img src="/assets/images/brewintro.png" class="navbrew-img"/>
+        </div>
+        <div class="navbrew-text">
+            <a href="@routes.IntroController.intro()" class="navbrew-a">
+                <h3>实验室介绍</h3>
+            </a>
+            <p>本研究室的研究活动主要集中在酿造微生物学与工业酶学领域，通过在酿造发酵过程中群体微生物结构与功能、微生物及其代谢机理、微生物新酶及其分子改造等研究工作，从基因组学、蛋白组学和代谢组学的水平上，解析微生物发酵机制、探索微生物酶蛋白的结构与催化功能的相互关系，提升和改造传统发酵工艺，采用发酵技术和酶技术发掘和延展新的生物制造过程，满足工业生物制造的需求。</p>
+        </div>
+
+        <div class="navbrew-stat" style="width: 330px;padding-top: 25px">
+            <h5>版本信息</h5>
+            <ul>
+                <li><i class=" fa fa-caret-right"></i> 江南大学酿造数据库1.0 于2018年5月上线！</li>
+                <li><i class=" fa fa-caret-right"></i>风味信息 于2018年3月更新！</li>
+                <li><i class=" fa fa-caret-right"></i>菌株信息 于2018年2月更新！</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="col-md-12 navbrew-info">
+        <div style="float: left;">
+            <img src="/assets/images/p1.jpg" class="navbrew-img" />
+        </div>
+        <div class="navbrew-text">
+            <a href="@routes.BacteriaAmpliconController.bacteriaPage()" class="navbrew-a">
+                <h3>16S 扩增子数据</h3>
+            </a>
+            <p>16SrDNA是细菌的系统分类研究中最有用的和最常用的分子钟，其种类少，含量大
+                （约占细菌DNA含量的80%），分子大小适中，存在于所有的生物中，其进化具有良
+                好的时钟性质，在结构与功能上具有高度的保守性，素有“细菌化石”之称。</p>
+        </div>
+        <div class="navbrew-stat">
+            <ul>
+                <li>
+                    <a href="#"><i class=" fa fa-caret-right"></i> 酱香
+                        ( <span>697</span> )</a></li>
+                <li><a href="#"><i class=" fa fa-caret-right"></i>
+                    米香
+                    ( <span>6989</span> )</a></li>
+
+            </ul>
+        </div>
+        <div class="navbrew-stat">
+            <ul>
+                <li><a href="#"><i class=" fa fa-caret-right"></i>
+                    浓香
+                    ( <span>6989</span> )</a></li>
+                <li><a href="#"><i class=" fa fa-caret-right"></i>
+                    清香
+                    ( <span>6989</span> )</a></li></ul>
+        </div>
+
+    </div>
+
+    <div class="col-md-12 navbrew-info">
+
+        <div style="float: right;">
+            <img src="/assets/images/p2.jpg" class="navbrew-img" />
+        </div>
+        <div class="navbrew-text">
+            <a href="@routes.FungusAmpliconController.fungusPage()" class="navbrew-a">
+                <h3>ITS 数据</h3>
+            </a>
+
+            <p>ITS（Internal Transcribed Spacer）：内转录间隔区，是位于真菌核糖体RNA（rRNA）
+                基因转录区或对应多顺反子rRNA前体中大、小亚基rRNA之间的核酸序列。用于真菌鉴定的
+                ITS序列通常包括ITS1、5 .8 S 和ITS2。真菌ITS 区域长度一般在500 ～750 bp( 碱基对)。</p>
+        </div>
+        <div class="navbrew-stat">
+            <ul>
+                <li>
+                    <a href="#"><i class=" fa fa-caret-right"></i> 酱香
+                        ( <span>23</span> )</a></li>
+                <li><a href="#"><i class=" fa fa-caret-right"></i>
+                    米香
+                    ( <span>2509</span> )</a></li>
+            </ul>
+        </div>
+        <div class="navbrew-stat">
+            <ul>
+                <li><a href="#"><i class=" fa fa-caret-right"></i>
+                    浓香
+                    ( <span>274</span> )</a></li>
+                <li><a href="#"><i class=" fa fa-caret-right"></i>
+                    清香
+                    ( <span>182</span> )</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="col-md-12 navbrew-info" >
+        <div style="float: left;">
+            <img src="/assets/images/p3.png" class="navbrew-img"/>
+        </div>
+        <div class="navbrew-text">
+            <a href="@routes.TransController.transPageBefore()" class="navbrew-a">
+                <h3>宏转录组数据</h3>
+            </a>
+            <p>宏转录组(Metatranscriptome)测序是以特定样品中微生物群落的全部RNA为研究对象,从转录
+                水平上分析微生物群落中活跃菌种的组成以及活性基因的表达情况。</p>
+        </div>
+        <div class="archive">
+            <ul>
+                <li><p>15</p><span style="font-style: normal">样本</span></li>
+                <li><p>68362</p><span style="font-style: normal">转录组</span></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="col-md-12 navbrew-info">
+        <div style="float: right;">
+            <img src="/assets/images/p6.png" class="navbrew-img"/>
+        </div>
+        <div class="navbrew-text">
+
+            <a href="@routes.PacController.pacPage()" class="navbrew-a">
+                <h3>理化数据</h3>
+            </a>
+            <p>理化检验，就是借助物理、化学的方法，使用某种测量工具或仪器设备，如千分尺、千分表、验规、
+                显微镜等所进行的检验。与官能检验一样是质量检验的方式之一。</p>
+        </div>
+
+        <div class="archive">
+            <ul>
+                <li><p>15</p><span style="font-style: normal">样本</span></li>
+                <li><p>8</p><span style="font-style: normal">计量单位</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-md-12 navbrew-info">
+        <div style="float: left;">
+            <img src="/assets/images/p5.png" class="navbrew-img"/>
+        </div>
+        <div class="navbrew-text">
+            <a href="@routes.FlavorController.flavor()" class="navbrew-a">
+                <h3>酒醅风味信息</h3>
+            </a>
+            <p>中国白酒是世界几大蒸馏酒之一，由于采用高粱原料、野生微生物及固态糖化发酵工艺、固体蒸馏等方式，
+                加上贮存及调制勾兑方法有所不同，因而我国传统白酒的香味成分与其他蒸馏酒有所差异。</p>
+        </div>
+        <div class="navbrew-stat">
+            <ul>
+                <li>
+                    <a href="#"><i class=" fa fa-caret-right"></i> 酱香
+                        ( <span>50</span> )</a></li>
+                <li><a href="#"><i class=" fa fa-caret-right"></i>
+                    清香
+                    ( <span>63</span> )</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-md-12 navbrew-info">
+        <div style="float: right;">
+            <img src="/assets/images/p4.png" class="navbrew-img"/>
+        </div>
+        <div class="navbrew-text">
+            <a href="http://210.22.121.250:31007/" target="_blank" class="navbrew-a">
+                <h3>菌种信息</h3>
+            </a>
+            <p>酿造菌种信息管理数据库，可上传，查看，管理已有的菌种信息</p>
+            <p class="ftorg mgt20"><a href="https://db.cngb.org/blast/blast/blastn/">查阅更多</a></p>
+        </div>
+    </div>
+
+}

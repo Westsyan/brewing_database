@@ -1,0 +1,126 @@
+<style>
+    .nav {
+        width: 100%;
+    }
+
+
+
+    .nav li a{
+        color: #333 !important;
+    }
+</style>
+
+<header>
+
+    <div style="background-color: white;width: 100%">
+
+        <nav class="navbar navbar-default" style="
+            color: black;width: 1200px !important;
+            margin: auto;box-shadow: unset">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#coll" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse " id="navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="@routes.HomeController.index3()">首页</a></li>
+                    <li class="dropdown">
+                        <a href="">扩增子数据 <span class="fa fa-caret-down"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@routes.BacteriaAmpliconController.bacteriaPage()" class="drop1">细菌(16S)</a></li>
+                            <li class="divider"></li>
+                            <li><a href="@routes.FungusAmpliconController.fungusPage()" class="drop1">真菌(ITS)</a></li>
+                            <li class="divider"></li>
+                            <li><a href="@routes.BlastController.blastBefore()" class="drop1">Blastn 序列比对</a></li>
+                            <li class="divider"></li>
+                            <li><a href="@routes.BacteriaAmpliconController.downloadPage()" class="drop1">下载</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="@routes.TransController.transPageBefore()">宏转录组数据</a>
+
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="@routes.MetaGenomeController.metaGenomePage()">宏基因组数据</a>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="">理化数据 <span class="fa fa-caret-down"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@routes.PacController.pacPage()" class="drop1">浏览</a></li>
+                            <li class="divider"></li>
+                            <li><a href="@routes.PacController.radar()" class="drop1">理化雷达图</a></li>
+
+                            @*                            <li><a href="@routes.PacController.pacColumnPage("acidity")" class="drop1">酸度</a></li>
+                            <li><a href="@routes.PacController.pacColumnPage("ph")" class="drop1">PH</a></li>
+                            <li><a href="@routes.PacController.pacColumnPage("sugar")" class="drop1">还原糖</a></li>
+                            <li><a href="@routes.PacController.pacColumnPage("moisture")" class="drop1">水分</a></li>
+                            <li><a href="@routes.PacController.pacColumnPage("alcohol")" class="drop1">乙醇</a></li>
+                            <li><a href="@routes.PacController.pacColumnPage("aceticAcid")" class="drop1">乙酸</a></li>
+                            <li><a href="@routes.PacController.pacColumnPage("lacticAcid")" class="drop1">乳酸</a></li>
+                            <li><a href="@routes.PacController.pacColumnPage("temp")" class="drop1">温度</a></li>*@
+
+                        </ul>
+
+                    </li>
+                    <li class="dropdown"><a href="@routes.FlavorController.flavor()">风味信息</a></li>
+                    <li class="dropdown"><a href="#">菌种信息 <span class="fa fa-caret-down"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@routes.StrainController.strainPage()" class="drop1">浏览</a></li>
+                            <li class="divider"></li>
+                            <li><a href="http://210.22.121.250:31007/" target="_blank" class="drop1">菌种信息数据库</a></li>
+                        </ul>
+
+                    </li>
+                    <li class="dropdown"><a href="@routes.MapController.mapPage()">各酒厂地理位置</a></li>
+                    <li class="dropdown"><a href="#">
+                        实验室介绍 <span class="fa fa-caret-down"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@routes.IntroController.intro()" class="drop1">实验室简介</a></li>
+                            <li><a href="@routes.IntroController.directorPage()" class="drop1">主任介绍</a></li>
+                        </ul>
+
+
+                    </li>
+
+                </ul>
+
+            </div>
+                <!-- /.navbar-collapse -->
+        </nav>
+
+    </div>
+
+    <div class=" page-header"  style="width: 100%;
+        background-size: 100% 120px" >
+        <div class="banner" style="width: 1200px !important;
+            margin: auto">
+            <div class="logo" >
+                <a href="http://lbmae.jiangnan.edu.cn/" target="_blank"><img src="/assets/images/logo.png" style="width: 180px"/></a>
+                <h4 style="margin-top: 0px;
+                    width: 600px;
+                    color: white;
+                    text-shadow: 2px 2px 0 #555;
+                    padding: 20px 15px 0px 0px;
+                    float: right;
+                    letter-spacing: 0px;">
+                    <span class="header-title" style="font-size: 28px">
+                    酿造微生物数据库平台
+                        <br/>
+                        <span style="font-size: 18px">Brewing Microbes Database</span>
+                    </span>
+                    <br>
+                </h4>
+            </div>
+        </div>
+
+    </div>
+
+</header>

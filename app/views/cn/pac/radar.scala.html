@@ -1,0 +1,133 @@
+@cn.page.main("") {
+
+    <div class="row">
+        <div class="form-group col-sm-12">
+            <h2 class="page-heading">理化数据雷达图</h2>
+        </div>
+    </div>
+
+    <script src="@routes.Assets.versioned("Echarts/dist/echarts.min.js")"></script >
+
+    <div class="tabs-container">
+        <div class="tab-content">
+            <div class="tab-pane active" style="margin-top: 10px;">
+                <form class="form-horizontal" method="get" id="form">
+
+                    <div class="form-group" id="againstType">
+                        <label class="control-label col-sm-3">选择样品:</label>
+                        <div class="col-sm-8" style="margin-top: 5px">
+                            <div id="sample"></div>
+                            <div style="width: 180px;
+                                padding-top: 10px">
+                                <input type="button" value="Select All" class="btn btn-primary" onclick="selectAll()" />
+                                <input type="button" value="Inverse" class="btn btn-primary" onclick="inverse()"/>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <hr>
+                    <div class="form-group">
+                        <div class="actions col-sm-offset-3 col-sm-3">
+                            <button type="button" class="btn btn-primary" style="width: 90%;" id="search"
+                            onclick="drawRadar()">
+                                画图</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="result" style="display: none;">
+        <hr>
+        <div id="main" style="width: 800px;
+            height: 600px;margin:auto"></div>
+    </div>
+
+
+    <script>
+
+            function selectAll() {
+                $(".sample_data").prop("checked", true);
+            }
+
+            function inverse() {
+                $(".sample_data").prop("checked", false);
+            }
+
+            $(function () {
+
+                $.ajax({
+                    url: "@routes.PacController.getAllSample()",
+                    type: "post",
+                    success: function (data) {
+                        let sample = "";
+                        $.each(data.sample, function (i, v) {
+                            sample += "                            <label style='width:150px;float: left' >\n" +
+                                    "                                <input type='checkbox' name='sample[]' value='" + v +
+                                    "' class='sample_data'/> " + v + "\n" +
+                                    "                            </label>";
+                        });
+                        $("#sample").append(sample)
+
+                    }
+                });
+
+            })
+
+
+        function drawRadar() {
+            $.ajax({
+                url: "@routes.PacController.getRadarData()",
+                type: "post",
+                data:$("#form").serialize(),
+                success: function (data) {
+                    var myChart = echarts.init(document.getElementById('main'));
+                    var option = {
+                        title: {
+                            text: '理化数据雷达图',
+                            left: 'center'
+                        },
+                        tooltip: {},
+                        legend: {
+                            type: 'scroll',
+                            orient: 'vertical',
+                            right: 10,
+                            top: 'middle',
+                            data: data.legend
+                        },
+                        radar: {
+                            // shape: 'circle',
+                            name: {
+                                textStyle: {
+                                    color: 'black',
+                                    backgroundColor: '#fff',
+                                    borderRadius: 3,
+                                    padding: [3, 5],
+                                    fontSize: 18
+                                }
+                            },
+                            indicator: data.indicator
+                        },
+                        series: [{
+                            name: '',
+                            type: 'radar',
+                            // areaStyle: {normal: {}},
+                            data: data.data
+                        }]
+                    };
+
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart.setOption(option);
+
+                    $("#result").show();
+                }
+            })
+        }
+
+    </script>
+
+}

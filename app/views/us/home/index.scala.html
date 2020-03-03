@@ -1,0 +1,183 @@
+@us.home.main("酿造微生物数据库平台") {
+
+    <style>
+            .thumbnail {
+                height: 200px;
+            }
+
+            .thumbnail > .row {
+                margin-top: 12px;
+            }
+
+        .navbrew{
+            text-align: center;
+        }
+
+        .navbrew-img{
+            width: 250px;
+            height: 200px;
+        }
+
+        .navbrew-a{
+            color: #333;
+        }
+
+        .navbrew-a h3{
+            text-align: center;
+        }
+    </style>
+    <div class="row">
+        <div class="col-md-9">
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-cube"></i> 介绍</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="jumbotron" style="background-color: white">
+                    <p class="text-justify">
+                        本中心主要针对传统发酵工程领域和生物催化领域中的关键科学技术与工程问题。一方面，在传统工艺的基础上，
+                        利用现代发酵工程、酶工程、基因工程以及蛋白质组学技术，研究白酒、黄酒、葡萄酒、啤酒、果露酒中的特征风
+                        味成分和酿制过程中的功能微生物、酶及其代谢机制，开发新产品，提升传统工艺；另一方面，在分子水平改造重
+                        要微生物和酶，开发酶制剂，研究催化反应机制，提高反应效率，促进工业化应用。
+                    </p>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-database"></i> 快速导航</h3>
+
+
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+
+                        <div class="col-md-4 navbrew">
+                            <a href="@routes.BacteriaAmpliconController.bacteriaPage()" class="navbrew-a">
+                                <img src="/assets/images/p1.jpg" class="navbrew-img" />
+                                <h3>16S 数据</h3>
+
+                            </a>
+                        </div>
+
+                        <div class="col-md-4 navbrew">
+                            <a href="@routes.FungusAmpliconController.fungusPage()" class="navbrew-a">
+                                <img src="/assets/images/p2.jpg" class="navbrew-img" />
+                                <h3>ITS 数据</h3>
+
+                            </a>
+                        </div>
+
+                        <div class="col-md-4 navbrew" >
+                            <a href="@routes.TransController.transPageBefore()" class="navbrew-a">
+                                <img src="/assets/images/p3.png" class="navbrew-img" />
+                                <h3>宏转录组数据</h3>
+
+                            </a>
+                        </div>
+
+                        <div class="col-md-4 navbrew">
+                            <a href="@routes.PacController.pacPage()" class="navbrew-a">
+                                <img src="/assets/images/p6.png" class="navbrew-img" />
+                                <h3>理化数据</h3>
+
+                            </a>
+                        </div>
+
+                        <div class="col-md-4 navbrew">
+                            <a href="@routes.FlavorController.flavor()" class="navbrew-a">
+                                <img src="/assets/images/p5.png" class="navbrew-img" />
+                                <h3>风味信息</h3>
+                            </a>
+                        </div>
+
+                        <div class="col-md-4 navbrew">
+                            <a href="http://210.22.121.250:31007/" target="_blank" class="navbrew-a">
+                                <img src="/assets/images/p4.png" class="navbrew-img" align="center" />
+                                <h3>菌株信息</h3>
+                            </a>
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+
+
+
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-cube"></i> 数据统计</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-unstyled">
+                        <li><i class="fa fa-chevron-circle-right"></i> 16S 数据 : 10,000+</li>
+                        <li><i class="fa fa-chevron-circle-right"></i> ITS 数据 : 8,000+</li>
+                        <li><i class="fa fa-chevron-circle-right"></i> 风味物质库 : 1000+</li>
+                        <li><i class="fa fa-chevron-circle-right"></i> 可培养菌株 : 600+</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-search"></i> 搜索</h3>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal" id="form"
+                    accept-charset="UTF-8" method="get" action="/eucalyptus/search/searchBefore">
+                        <input type="text" style="float: left;height: 40px;" class="form-control" placeholder="Keyword" name="input">
+                        <button type="submit"
+                        style="float: left;
+                            background-color: transparent;
+                            border: transparent;
+                            float: right;
+                            margin-top: -31px;
+                            margin-right: 5px;"><i class="fa fa-search"></i></button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-bookmark"></i> 版本信息</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-unstyled">
+                        <li><i class="fa fa-chevron-circle-right"></i>
+                            江南大学酿造数据库1.0 于2018年5月上线！
+                        </li>
+                        <li><i class="fa fa-chevron-circle-right"></i>
+                            风味信息 于2018年3月更新！
+                        </li>
+                        <li><i class="fa fa-chevron-circle-right"></i>
+                            菌株信息 于2018年2月更新！
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+
+
+
+        </div>
+    </div>
+
+
+}

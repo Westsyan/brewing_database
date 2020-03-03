@@ -1,0 +1,70 @@
+@(name:String,head:String)
+@cn.page.main("理化数据" + name + "图") {
+
+    <script src="@routes.Assets.versioned("Highcharts-6.0.1/code/highcharts.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.versioned("Highcharts-6.0.1/code/highcharts-more.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.versioned("Highcharts-6.0.1/code/modules/exporting.js")" type="text/javascript"></script>
+
+<style>
+        th {
+            width: 20%;
+        }
+
+        .js-plotly-plot .plotly .cursor-crosshair {
+            cursor: default;
+        }
+
+</style>
+<div class="row">
+    <div class="form-group col-sm-12">
+        <h2 class="page-heading">理化数据@{name}图</h2>
+    </div>
+</div>
+
+        <div id="charts"></div>
+    <table id="sample">
+        <thead>
+            <tr  id="head">
+                <th>Sample</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="datas">Data</td>
+            </tr>
+        </tbody>
+
+
+    <script>
+
+        $(function () {
+            $.ajax({
+                url:"@routes.PacController.getPacColumnData(head)",
+                type:"post",
+                success:function (data) {
+                    columnDraw("理化数据@{name}图",data.maxCategory,data.infos,"@name")
+                    var sample = "";
+                    $.each(data.maxCategory,function (i,v) {
+                        sample += "<th><a target='_blank' href='/CN/brew/Pac/pacInfoBySample?sample=" +
+                                v +"'>" + v + "</a></th>"
+                    });
+                    $("#head").append(sample);
+
+
+                    var datas = "";
+                    $.each(data.infos,function (i,v) {
+                        datas += "<td>" + v + "</td>"
+                    });
+                    $("#datas").append(datas);
+                    $("#sample").bootstrapTable();
+
+                    $("#sample").bootstrapTable();
+                }
+            })
+
+
+        })
+
+
+    </script>
+}

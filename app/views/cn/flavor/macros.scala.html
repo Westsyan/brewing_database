@@ -1,0 +1,26 @@
+@cn.page.main("宏转录组数据") {
+
+    @cn.flavor.text("宏转录组数据")
+
+    <script>
+
+            $(function () {
+
+                new Vue({
+                    el: "#table",
+                    data: {
+                        ths: {name:"Name",A05:"A05", A10:"A10", A15:"A15", A20:"A20", A25:"A25", A32:"A32",
+                            B05:"B05", B10:"B10", B15:"B15", B20:"B20", B25:"B25", B32:"B32",
+                            C05:"C05", C10:"C10", C15:"C15", C20:"C20", C25:"C25", C32:"C32",
+                            MTF15C:"MTF15C", MTF20A:"MTF20A", MTF25A:"MTF25A", MTF30A:"MTF30A", MTF30B:"MTF30B", MTF30C:"MTF30C"
+                        }
+                    }
+                });
+
+                axios.post("@routes.FlavorController.getAllMacro").then((data) => {
+                    $("#table").bootstrapTable({data: data.data})
+                });
+
+            })
+    </script>
+}

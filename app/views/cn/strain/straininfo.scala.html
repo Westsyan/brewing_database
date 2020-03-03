@@ -1,0 +1,43 @@
+@cn.page.main("可培养菌株信息") {
+
+    @cn.flavor.text("可培养菌株信息")
+
+    <script>
+
+            $(function () {
+
+                new Vue({
+                    el: "#table",
+                    data: {
+                        ths: {
+                            name:"菌株名称（或属名）（英文）",
+                            header:"菌株英文名称首字母",
+                            save_place:"保藏位置",
+                            save_type:"保藏形式",
+                            originid:"实验室原始编号（或命名）",
+                            chinese:"菌株名称（中文）",
+                            medium:"培养基",
+                            postion:"培养条件（耗/厌氧，培养温度，转速）",
+                            source:"来源",
+                            apply:"应用",
+                            save_people:"保藏人",
+                            teacher:"指导老师",
+                            save_date:"保藏日期",
+                            primer_seq:"引物序列",
+                            seq_index:"序列索引号",
+                            emf:"有无电镜图",
+                            emf_name:"电镜图名称",
+                            train:"有无培养图",
+                            train_name:"培养图名称",
+                            strain_form:" 菌落形态"
+                        }
+                    }
+                });
+
+                axios.post("@routes.StrainController.getAllStrainInfo()").then((data) => {
+                    $("#table").bootstrapTable({data: data.data})
+                });
+
+            })
+    </script>
+}

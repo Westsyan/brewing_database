@@ -1,0 +1,27 @@
+@cn.page.main("16S 数据") {
+
+    @cn.amp.text("16S")
+
+
+    <script>
+
+        $(function () {
+
+            new Vue({
+                el: "#table",
+                data: {
+                    ths: ["16S",
+                        "A05", "A10", "A15", "A20", "A25", "A32",
+                        "B05", "B10", "B15", "B20", "B25", "B32",
+                        "C05", "C10", "C15", "C20", "C25", "C32"]
+                }
+            });
+
+            axios.post("@routes.AmpController.getAll16S").then((data) => {
+                $("#table").bootstrapTable({data: data.data})
+            });
+
+        })
+    </script>
+
+}

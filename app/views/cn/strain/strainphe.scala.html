@@ -1,0 +1,31 @@
+@cn.page.main("菌株酶学表型") {
+
+    @cn.flavor.text("菌株酶学表型")
+
+    <script>
+
+            $(function () {
+
+                new Vue({
+                    el: "#table",
+                    data: {
+                        ths: {
+                            name:"菌种名称",
+                            code:"编码",
+                            chinese:"中文",
+                            latin:"拉丁文",
+                            separation:"分离来源",
+                            sugar:"糖化力",
+                            protein:"分解蛋白质的能力",
+                            tole:"耐受性"
+                        }
+                    }
+                });
+
+                axios.post("@routes.StrainController.getAllStrainPhe()").then((data) => {
+                    $("#table").bootstrapTable({data: data.data})
+                });
+
+            })
+    </script>
+}

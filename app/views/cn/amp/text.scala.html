@@ -1,0 +1,30 @@
+@(title: String)
+<style>
+        .table > thead > tr > th {
+            text-align: center;
+        }
+
+        .table > tbody > tr > td {
+            text-align: center;
+        }
+
+</style>
+
+
+<div class="row">
+    <div class="form-group col-sm-12">
+        <h2 class="page-heading">@title</h2>
+    </div>
+</div>
+
+
+<table class="display table table-bordered" id="table">
+    <thead>
+        <tr>
+            <th v-for="th in ths" :data-field="th" data-sortable="true">{{th}}</th>
+        </tr>
+    </thead>
+
+</table>
+
+

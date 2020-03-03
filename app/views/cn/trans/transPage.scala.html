@@ -1,0 +1,96 @@
+@cn.page.main("宏转录组数据") {
+
+
+    <style>
+        .table > thead > tr > th {
+            text-align: center;
+        }
+
+        .table > tbody > tr > td {
+            text-align: center;
+        }
+
+</style>
+
+
+            <div class="row">
+                <div class="form-group col-sm-12">
+                    <h2 class="page-heading">宏转录组数据</h2>
+                </div>
+            </div>
+
+            <div style="margin-top: 10px;">
+
+                <p><b>宏转录组：</b></p>
+                <div id="common" class="checkbox"></div>
+                <p><b>样品：</b></p>
+                <div id="sample" class="checkbox"></div>
+            </div>
+
+            <table class="display table table-bordered" id="table" data-pagination="true" data-search="true"
+            data-toolbar="#toolbar" data-page-list="[10, 25, 50, 100]" data-search-align="left" data-multiple-search="true">
+                <thead>
+                    <tr id="id">
+                    </tr>
+                </thead>
+            </table>
+
+            <script>
+
+            $(function () {
+
+                $.ajax({
+                    url: "/CN/brew/Trans/getHeader?flavor=jiangxiang",
+                    type: "post",
+                    success: function (data) {
+                        let common = "";
+                        let th = "";
+                        $.each(data.common, function (i, v) {
+                            common += "<label style='margin-right: 15px'>" +
+                                    "<input type='checkbox' checked='checked' value='" + i + "' onclick='setColumns(\"" + i
+                                    + "\")')\">" + v +
+                                    "</label>";
+                            th += "<th data-field='" + i + "' data-sortable='true'>" + v + "</th>"
+                        });
+
+                        $("#common").html(common);
+
+
+                        let sample = "";
+                        $.each(data.sample, function (i, v) {
+                            sample += "<label style='margin-right: 15px'>" +
+                                    "<input type='checkbox' checked='checked' value='" + i + "' onclick='setColumns(\"" + i
+                                    + "\")')\">" + v +
+                                    "</label>";
+                            th += "<th data-field='" + i + "' data-sortable='true'>" + v + "</th>"
+                        });
+
+                        $("#sample").html(sample);
+                        $("#id").html(th);
+
+                        $('#table').bootstrapTable({
+                            method: 'post',
+                            url: "@routes.TransController.getAllTrans()",
+                            sidePagination: "server",
+                            pageNumber: 1,
+                            pagination: true,
+                            pageList: [10, 25, 50, 100],
+                            contentType: "application/x-www-form-urlencoded"
+                        });
+
+                        $.each(data.sample, function (n, value) {
+                                    $('#table').bootstrapTable('hideColumn', n);
+                                    $("input:checkbox[value=" + n + "]").attr("checked", false)
+                                }
+                        );
+                    }
+                })
+
+
+
+
+
+            })
+    </script>
+
+}

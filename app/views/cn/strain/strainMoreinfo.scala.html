@@ -1,0 +1,117 @@
+@import models.Tables.StrainRow
+@(row: StrainRow)
+@cn.page.main("菌种详细信息") {
+
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("mscroll/css/lz_index.css")">
+
+    <style>
+            th {
+                width: 20%;
+            }
+
+            .myBold {
+            }
+
+            .myTd {
+                max-height: 150px;
+                overflow: auto;
+                padding-right: 25px;
+            }
+
+            .js-plotly-plot .plotly .cursor-crosshair {
+                cursor: default;
+            }
+
+    </style>
+
+    <div class="row">
+        <div class="form-group col-sm-12">
+            <h2 class="page-heading">菌种详细信息</h2>
+        </div>
+    </div>
+
+
+    <div class="box">
+        <h4 class="area">
+            <div class="area_img">
+                <img src="/assets/mscroll/img/top.png">
+            </div>
+            <span class="area_title" data-id="1">Basic</span>
+
+        </h4>
+        <div class="picture_list">
+
+
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th>菌株名称首字母</th>
+                        <td>@row.initial</td>
+
+                        <th>物种类别</th>
+                        <td>@row.speciesType</td>
+                    </tr>
+
+                    <tr>
+                        <th>物种中文名称</th>
+                        <td>@row.chinese</td>
+
+                        <th>物种拉丁文名称</th>
+                        <td>@row.latin</td>
+                    </tr>
+
+                    <tr>
+                        <th>Genus</th>
+                        <td>@row.genus</td>
+
+                        <th>Species</th>
+                        <td>@row.species</td>
+                    </tr>
+
+                    <tr>
+                        <th>LAM菌种库统一编号</th>
+                        <td colspan="3">@row.lamCode</td>
+
+                    </tr>
+
+                    <tr>
+                        <th>是否专利菌株</th>
+                        <td>@row.patent</td>
+
+                        <th>专利保藏编号</th>
+                        <td>@row.patentCode</td>
+                    </tr>
+
+                    <tr>
+                        <th>来源</th>
+                        <td>@row.source</td>
+
+                        <th>应用</th>
+                        <td>@row.apply</td>
+                    </tr>
+
+                    <tr>
+                        <th>特征</th>
+                        <td colspan="3">@row.feature</td>
+                    </tr>
+
+                    <tr>
+                        <th>相关论文或专利</th>
+                        <td colspan="3">@row.text</td>
+                    </tr>
+
+                    <tr>
+                        <th>备注</th>
+                        <td colspan="3">@row.notes</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+    <script src="@routes.Assets.versioned("mscroll/js/mscroll.js")" type="text/javascript"></script>
+
+}

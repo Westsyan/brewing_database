@@ -1,0 +1,56 @@
+@(title: String)(content: Html)
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>@title</title>
+             <!-- Custom Theme files -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        @* 360极速模式*@
+        <meta name="renderer" content="webkit">
+
+        <link href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")" type="text/css" rel="stylesheet" media="all">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap/css/bootstrap-theme.min.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap-table-master/dist/bootstrap-table.min.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap-submenu-3.0.0/dist/css/bootstrap-submenu.min.css")">
+
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap-sweetalert-master/dist/sweetalert.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/my.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/semantic.min.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("font-awesome-4.7.0/css/font-awesome.min.css")">
+         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap-sweetalert-master/dist/sweetalert.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("select2-4.0.3/dist/css/select2.min.css")">
+
+
+
+        <link href="@routes.Assets.versioned("main/css/style.css")" type="text/css" rel="stylesheet" media="all">
+        <link href="@routes.Assets.versioned("main/css/my.css")" type="text/css" rel="stylesheet" media="all">
+
+        <script src="@routes.Assets.versioned("bootstrap/js/jquery-3.1.1.min.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.versioned("bootstrap/js/bootstrap.min.js")"> </script>
+        <script src="@routes.Assets.versioned("bootstrap-table-master/dist/bootstrap-table.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("bootstrap-submenu-3.0.0/dist/js/bootstrap-submenu.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("bootstrap-table-master/dist/locale/bootstrap-table-en-US.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("bootstrap-table-master/dist/extensions/export/bootstrap-table-export.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("bootstrap-table-master/dist/extensions/export/tableExport.min.js")" type="text/javascript"></script>
+
+        <script src="@routes.Assets.versioned("layer-v3.0/layer/layer.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("bootstrap-sweetalert-master/dist/sweetalert.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("select2-4.0.3/dist/js/select2.full.min.js")" type="text/javascript"></script>
+
+
+        <script type="text/javascript" src="@routes.Assets.versioned("main/js/move-top.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.versioned("main/js/easing.js")"></script>
+
+        <script src="@routes.Assets.versioned("vue/vue.js")" type ="text/javascript"></script>
+        <script src="@routes.Assets.versioned("vue/axios.min.js")" type ="text/javascript"></script>
+
+
+    </head>
+    <body>
+
+        @cn.home.header()
+        @content
+
+    </body>
+</html>

@@ -1,0 +1,60 @@
+@cn.page.main("宏转录组数据") {
+
+
+    <style>
+            .table > thead > tr > th {
+                text-align: center;
+            }
+
+            .table > tbody > tr > td {
+                text-align: center;
+            }
+
+    </style>
+
+
+            <div class="row">
+                <div class="form-group col-sm-12">
+                    <h2 class="page-heading">理化数据</h2>
+                </div>
+            </div>
+
+            <table class="display table table-bordered" id="table" data-pagination="true" data-search="true"
+            data-toolbar="#toolbar" data-page-list="[10, 25, 50, 100]" data-search-align="left" data-multiple-search="true">
+                <thead>
+                    <tr>
+                        <th v-for="(value,name) in ths" :data-field="name"  data-sortable="true">{{value}}</th>
+                    </tr>
+                </thead>
+            </table>
+
+            <script>
+
+            $(function () {
+
+                new Vue({
+                    el: "#table",
+                    data: {
+                        ths:{
+                            sample:"样品",
+                            acidity:"酸度(mg/g)",
+                            ph:"PH",
+                            sugar:"还原糖(mg/g)",
+                            moisture:"水分(%)",
+                            alcohol:"乙醇",
+                            aceticAcid:"乙酸(mg/g)",
+                            lacticAcid:"乳酸(mg/g)",
+                            temp:"温度(°C)"
+                        }
+                    }
+                });
+
+                axios.post("@routes.PacController.getAllPcadata").then((data) => {
+                    $("#table").bootstrapTable({data: data.data})
+                });
+
+            })
+    </script>
+
+
+}

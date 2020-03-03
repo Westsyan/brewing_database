@@ -1,0 +1,436 @@
+@()(implicit session: Session)
+@cn.page.main("BLAST 序列比对") {
+
+    <div class="row">
+        <div class="form-group col-sm-12">
+            <h2 class="page-heading">BLAST 序列比对</h2>
+        </div>
+    </div>
+
+
+            <div class="tabs-container">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="blastn" style="margin-top: 10px;">
+                        <form class="form-horizontal" method="get" id="form">
+
+
+                            <input class="form-control" name="blastType" value="blastn" style="display: none;">
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">输入类型:</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" onchange="change(this, 'blastn')" name="method">
+                                        <option selected value="text">文本</option>
+                                        <option value="file">文件</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="blastnQueryContent">
+                                <label class="control-label col-sm-3">输入 FASTA 序列:</label>
+                                <div class="col-sm-8">
+                                    <textarea class="form-control monospace" name="queryText" id="queryText" rows="5"></textarea>
+                                    <span class="help-block">
+                                        e.g.,&nbsp;<a href="#" onclick="showExample('dna', 'form')"><em id="egQuery">
+                                        样例</em></a></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="blastnQueryFile" style="display: none;">
+                                <label class="control-label col-sm-3">上传文件:</label>
+                                <div class="col-sm-8">
+                                    <input id="input-1" type="file" class="file control-label" name="file" data-show-preview="false"
+                                    data-show-upload="false" accept=".fa,.fasta">
+                                    <span class="help-block"><a href="/eucalyptus/utils/downloadExample?example=blastn_example.fasta"><em id="egCrics">
+                                        样例文件</em></a></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="againstType">
+                                <label class="control-label col-sm-3">选择数据库:</label>
+                                <div class="col-sm-4" style="margin-top: 5px">
+                                    <label style='width:100px;float: left' >
+                                        <input type='checkbox' name='db[]' value='ba.txt' class='blastn_data'/> 16S
+                                    </label>
+                                    <label style='width:100px;float: left' >
+                                        <input type='checkbox' name='db[]' value='fu.txt' class='blastn_data'/> ITS
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">Evalue:</label>
+                                <div class="col-sm-2">
+                                    <input class="form-control" name="evalue" id="evalue" value="1e-5">
+                                </div>
+
+                                <label class="control-label col-sm-3">Word size:</label>
+                                <div class="col-sm-2">
+                                    <input class="form-control" name="wordSize" id="wordSize" value="28">
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">最大目标序列数:</label>
+                                <div class="col-sm-2">
+                                    <input class="form-control" name="maxTargetSeqs" id="mCharacteristic" value="10">
+                                </div>
+                            </div>
+
+                            <hr>
+                            <div class="form-group">
+                                <div class="actions col-sm-offset-3 col-sm-3">
+                                    <button type="button" class="btn btn-primary" style="width: 90%;" id="search"
+                                    onclick="blast('form')">
+                                        比对</button>
+                                </div>
+                                <div class="actions  col-sm-3">
+                                    <button type="reset" onclick="Reset('blastn')" class="btn btn-primary" style="width: 90%;">
+                                        重置</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <a href="#result"><div id="showResult"></div></a>
+
+            <div id="result" style="display: none">
+                <hr>
+                <h4 style="color: black">Result:</h4>
+                <button class="btn btn-primary down" onclick="downloadExcel()">下载</button>
+                <iframe id="frame" style="width: 1200px;" height="1000px" frameborder="0" align="middle">
+
+                </iframe>
+
+            </div>
+
+    <script>
+
+            var excel = "";
+
+
+            var dna = ">BAJX000001\n" +
+                    "GTAGGGAATCTTCCACAATGGGCGCAAGCCTGATGGAGCAACACCGCGTGAGTGAAGAAGGGTTTCGGCTCGTAAAACTCTGTTGTTGAAGAAGAACG" +
+                    "TGCGTGAGAGTAACTGTTCATGCAGTGACGGTATTCAACCAGAAAGTCACGGCTAACTACGTGCCAGCAGCCGCGGTAATACGTAGGTGGCAAGCGTT" +
+                    "TCCGGATTTATTGGGCGTAAAGCGAGCGCAGGCGGTTACTTAAGTCTGATGTGAAAGCCTTCGGCTTAACCGAAGAAGTGCATCGGAAACTGGGTGAC" +
+                    "TTGAGTGCAGAAGAGGACAGTGGAACTCCATGTGTAGCGGTGGAATGCGTAGATATATGGAAGAACACCAGTGGCGAAGGCGGCTGTCTGGTCTGCAA" +
+                    "CTGACGCTGAGGCTCGAAAGCATGGGTAGCGAACAGG\n" +
+                    ">BAJX000002\n" +
+                    "GTAGGGAATCTTCCACAATGGACGCAAGTCTGATGGAGCAACGCCGCGTGAGTGAAGAAGGTTTTCGGATCGTAAAGCTCTGTTGTTGGTGAAGAAAG" +
+                    "ATAGTGAGAGTAACTGCTCATTATTTGCCGGTAATCAACCAGAAAGTCACGGCTAACTACGTGCCAGCAGCCGCGGTAATACGTAGGTGGCAAGCGTT" +
+                    "GTCCGGATTTATTGGGCGTAAAGCGAGCGCAGGCGGAAAGATAAGTCAGATGTGAAAGCCCTCGGCTTAACCGAGGAATAGCATCGGAAACTGTCTTT" +
+                    "CTTGAGTGCAGAAGAGGAGAGTGGAACTCCATGTGTAGCGGTGGAATGCGTAGATATATGGAAGAACACCAGTGGCGAAGGCGGCTCTCTGGTCTGTA" +
+                    "ACTGACGCTGAGGCTCGAAAGCATGGGTAGCGAACAGG\n";
+
+            $(function () {
+
+                formValidation()
+            });
+
+
+            function change(element, t) {
+                var value = $(element).find(">option:selected").val();
+                if (value == "text") {
+                    $(".fileinput-remove-button").click();
+                    $("#" + t + "QueryContent").show();
+                    $("#" + t + "QueryFile").hide()
+                } else {
+                    $(".blast-text").val("");
+                    $("#" + t + "QueryContent").hide();
+                    $("#" + t + "QueryFile").show()
+                }
+            }
+
+            function downloadExcel() {
+                var fileName = "blast.xls";
+                var content = excel;
+                var blob = new Blob([content], {
+                    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+                });
+                saveAs(blob, fileName)
+            }
+
+            function showExample(type, formId) {
+                var seq = "";
+
+                if (type == "protein") {
+                    seq = pro;
+                } else {
+                    seq = dna;
+                }
+
+                $("#" + formId + " #queryText").val(seq);
+                $("#" + formId).formValidation("revalidateField", "queryText")
+            }
+
+            function blast(formId) {
+                var form = $("#" + formId);
+                form.formValidation("revalidateField", "queryText");
+                form.formValidation("revalidateField", "file");
+                var fv = form.data("formValidation");
+                fv.validate();
+                if (fv.isValid()) {
+                    var form1 = new FormData($("#" + formId)[0]);
+
+                    var index = layer.load(1, {
+                        shade: [0.1, '#fff']
+                    });
+
+                    $.ajax({
+                        url: "@routes.BlastController.blastRun()",
+                        type: "post",
+                        processData: false,
+                        contentType: false,
+                        data: form1,
+                        success: function (data) {
+                            layer.close(index);
+                            if (data.valid == "false") {
+                                swal("Error", data.message, "error");
+                                $("#result").hide()
+                            } else {
+                                $("#frame").attr("src", "/CN/brew/Blast/blastResultBefore?path=" + data.html + "&types=" + data.types);
+                                excel = data.excel;
+                                $("#result").show();
+                                //click事件不能直接绑定在a标签上，必须在a标签内的元素里
+                                $("#showResult").click();
+                            }
+                        }
+                    });
+                }
+            }
+
+            function formValidation() {
+                $('#form').formValidation({
+                    framework: 'bootstrap',
+                    icon: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields: {
+                        queryText: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'This is not be empty!'
+                                }
+                            }
+                        },
+                        file: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'File is required！'
+                                },
+                                file: {
+                                    extension: 'fa,fasta',
+                                    message: 'Query file must is a fasta file！'
+                                }
+                            }
+                        },
+                        evalue: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Evalue is required！'
+                                },
+                                numeric: {
+                                    message: 'Evalue must be number！'
+                                },
+                                greaterThan: {
+                                    value: 0,
+                                    message: "Evalue must greater than or equal to 0！"
+                                }
+                            }
+                        },
+                        wordSize: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Word size is required！'
+                                },
+                                integer: {
+                                    message: 'Word size must be intger！'
+                                },
+                                greaterThan: {
+                                    value: 4,
+                                    message: "Word size must greater than or equal to 4！"
+                                }
+                            }
+                        },
+                        maxTargetSeqs: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Max target seqs is required！'
+                                },
+                                integer: {
+                                    message: 'Max target seqs must be integer！'
+                                },
+                                greaterThan: {
+                                    value: 0,
+                                    message: "Max target seqs must greater than or equal to 0！"
+                                }
+                            }
+                        }
+                    }
+                });
+                $('#genomeForm').formValidation({
+                    framework: 'bootstrap',
+                    icon: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields: {
+                        queryText: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'This is not be empty!'
+                                }
+                            }
+                        },
+                        file: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'File is required！'
+                                },
+                                file: {
+                                    extension: 'fa,fasta',
+                                    message: 'Query file must is a fasta file！'
+                                }
+                            }
+                        },
+                        evalue: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Evalue is required！'
+                                },
+                                numeric: {
+                                    message: 'Evalue must be number！'
+                                },
+                                greaterThan: {
+                                    value: 0,
+                                    message: "Evalue must greater than or equal to 0！"
+                                }
+                            }
+                        },
+                        wordSize: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Word size is required！'
+                                },
+                                integer: {
+                                    message: 'Word size must be intger！'
+                                },
+                                greaterThan: {
+                                    value: 4,
+                                    message: "Word size must greater than or equal to 4！"
+                                }
+                            }
+                        },
+                        maxTargetSeqs: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Max target seqs is required！'
+                                },
+                                integer: {
+                                    message: 'Max target seqs must be integer！'
+                                },
+                                greaterThan: {
+                                    value: 0,
+                                    message: "Max target seqs must greater than or equal to 0！"
+                                }
+                            }
+                        }
+                    }
+                });
+                $('#blastpForm').formValidation({
+                    framework: 'bootstrap',
+                    icon: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields: {
+                        queryText: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'This is not be empty!'
+                                }
+                            }
+                        },
+                        file: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'File is required！'
+                                },
+                                file: {
+                                    extension: 'fa,fasta',
+                                    message: 'Query file must is a fasta file！'
+                                }
+                            }
+                        },
+                        evalue: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Evalue is required！'
+                                },
+                                numeric: {
+                                    message: 'Evalue must be number！'
+                                },
+                                greaterThan: {
+                                    value: 0,
+                                    message: "Evalue must greater than or equal to 0！"
+                                }
+                            }
+                        },
+                        wordSize: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Word size is required！'
+                                },
+                                integer: {
+                                    message: 'Word size must be intger！'
+                                },
+                                between: {
+                                    min: 0,
+                                    max: 8,
+                                    inclusive: false,
+                                    message: "Word size must less than  8！"
+                                }
+                            }
+                        },
+                        maxTargetSeqs: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Max target seqs is required！'
+                                },
+                                integer: {
+                                    message: 'Max target seqs must be integer！'
+                                },
+                                greaterThan: {
+                                    value: 0,
+                                    message: "Max target seqs must greater than or equal to 0！"
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            $("#input-1").fileinput({
+                showPreview: false
+            });
+
+            function Reset(obj) {
+                $("#" + obj + "QueryContent").show();
+                $("#" + obj + "QueryFile").hide();
+
+
+            }
+
+
+
+    </script>
+
+
+}

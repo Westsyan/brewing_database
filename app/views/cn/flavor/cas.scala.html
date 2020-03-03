@@ -1,0 +1,42 @@
+@cn.page.main("单菌风味产物分析") {
+
+    @cn.flavor.text("单菌风味产物分析")
+
+    <script>
+
+            $(function () {
+
+                new Vue({
+                    el: "#table",
+                    data: {
+                        ths: {
+                            cas:"CAS编号",
+                            name:"名称",
+                            molecular:"分子式",
+                            a:"A",
+                            b:"B",
+                            c:"C",
+                            d:"D",
+                            e:"E",
+                            f:"F",
+                            g:"G",
+                            h:"H",
+                            i:"I",
+                            j:"J",
+                            k:"K",
+                            l:"L",
+                            m:"M",
+                            n:"N",
+                            o:"O",
+                            p:"P"
+                        }
+                    }
+                });
+
+                axios.post("@routes.FlavorController.getAllCas").then((data) => {
+                    $("#table").bootstrapTable({data: data.data})
+                });
+
+            })
+    </script>
+}

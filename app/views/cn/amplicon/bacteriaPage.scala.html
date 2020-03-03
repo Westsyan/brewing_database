@@ -1,0 +1,118 @@
+@cn.page.main("细菌扩增子数据") {
+
+    <style>
+            .table > thead > tr > th {
+                text-align: center;
+            }
+
+            .table > tbody > tr > td {
+                text-align: center;
+            }
+
+    </style>
+
+
+    <div class="row">
+        <div class="form-group col-sm-12">
+            <h2 class="page-heading">细菌扩增子数据</h2>
+        </div>
+    </div>
+
+
+    <ul class="nav nav-tabs" style="margin-top: 20px">
+        <li role="presentation" id="paste-tab" class="active"><a data-toggle="tab" onclick="SwitchFlavor('jiangxiang')">
+            酱香</a></li>
+        <li role="presentation" id="upload-tab"><a data-toggle="tab" onclick="SwitchFlavor('mixiang')">
+            米香</a></li>
+        <li role="presentation" id="upload-tab"><a data-toggle="tab" onclick="SwitchFlavor('nongxiang')">
+            浓香</a></li>
+        <li role="presentation" id="upload-tab"><a data-toggle="tab" onclick="SwitchFlavor('qingxiang')">
+            清香</a></li>
+    </ul>
+
+    <div style="margin-top: 10px;">
+
+        <p><b>分类学信息：</b></p>
+        <div id="common" class="checkbox"></div>
+        <p><b>样品：</b></p>
+        <div id="sample" class="checkbox"></div>
+    </div>
+
+    <table class="display table table-bordered" id="table" data-pagination="true" data-search="true"
+     data-show-export="true" data-export-types="['excel','txt']" data-export-data-type="all"
+    data-toolbar="#toolbar" data-page-list="[10, 25, 50, 100]" data-search-align="left" data-multiple-search="true">
+        <thead>
+            <tr id="id">
+
+            </tr>
+        </thead>
+
+    </table>
+    <script>
+
+    $(function () {
+
+        SwitchFlavor("jiangxiang");
+
+    })
+
+    function SwitchFlavor(obj) {
+        $("#table").bootstrapTable('destroy');
+        $("#id").empty();
+
+        $.ajax({
+            url: "/CN/brew/Bacteria/getHeader?flavor=" + obj,
+            type: "post",
+            success: function (data) {
+
+                let common = "";
+                let th = "";
+                $.each(data.common, function (i, v) {
+                    common += "<label style='margin-right: 15px'>" +
+                            "<input type='checkbox' checked='checked' value='" + i + "' onclick='setColumns(\"" + i
+                            + "\")')\">" + v +
+                            "</label>";
+                    th += "<th data-field='" + i + "' data-sortable='true'>" + v + "</th>"
+                });
+
+                $("#common").html(common);
+
+
+                let sample = "";
+                $.each(data.sample, function (i, v) {
+                    sample += "<label style='margin-right: 15px'>" +
+                            "<input type='checkbox' checked='checked' value='" + i + "' onclick='setColumns(\"" + i
+                            + "\")')\">" + v +
+                            "</label>";
+                    th += "<th data-field='" + i + "' data-sortable='true'>" + v + "</th>"
+                });
+
+                $("#sample").html(sample);
+                $("#id").html(th);
+
+                $('#table').bootstrapTable({
+                    method: 'post',
+                    url: "/CN/brew/Bacteria/getAllBacteria?flavor=" + obj,
+                    sidePagination: "server",
+                    pageNumber: 1,
+                    pagination: true,
+                    pageList: [10, 25, 50, 100],
+                    contentType: "application/x-www-form-urlencoded"
+                });
+
+
+                $.each(data.sample, function (n, value) {
+                            $('#table').bootstrapTable('hideColumn', n);
+                            $("input:checkbox[value=" + n + "]").attr("checked", false)
+                        }
+                );
+            }
+        });
+
+
+    }
+
+
+
+    </script>
+}

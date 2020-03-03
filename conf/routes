@@ -1,0 +1,125 @@
+
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# An example controller showing a sample home page
+GET         /                                       controllers.HomeController.index3
+GET         /index                                  controllers.HomeController.index
+GET         /index2                                 controllers.HomeController.index2
+
+GET         /CN/brew/Amp/to16S                      controllers.AmpController.to16S
+POST        /CN/brew/Amp/getAll16S                  controllers.AmpController.getAll16S
+
+GET         /CN/brew/Amp/ITS                        controllers.AmpController.ITS
+POST        /CN/brew/Amp/getAllITS                  controllers.AmpController.getAllITS
+
+GET         /CN/brew/Flavor/pcdata                  controllers.FlavorController.pcdata
+POST        /CN/brew/Flavor/getAllPcdata            controllers.FlavorController.getAllPcdata
+
+GET         /CN/brew/Flavor/macros                  controllers.FlavorController.macros
+POST        /CN/brew/Flavor/getAllMacro             controllers.FlavorController.getAllMacro
+
+GET         /CN/brew/Flavor/cas                     controllers.FlavorController.cas
+POST        /CN/brew/Flavor/getAllCas               controllers.FlavorController.getAllCas
+
+GET         /CN/brew/Flavor/flavor                  controllers.FlavorController.flavor
+POST        /CN/brew/Flavor/getAllFlavor            controllers.FlavorController.getAllFlavor
+GET         /CN/brew/Flavor/moreInfoByMatter        controllers.FlavorController.moreInfoByMatter(cas:String)
+
+GET         /CN/brew/Strain/StrainInfo              controllers.StrainController.strainInfo
+POST        /CN/brew/Strain/getAllStrainInfo        controllers.StrainController.getAllStrainInfo
+
+GET         /CN/brew/Strain/StrainPhe               controllers.StrainController.strainPhe
+POST        /CN/brew/Strain/getAllStrainPhe         controllers.StrainController.getAllStrainPhe
+
+
+GET         /CN/brew/Trans/transPageBefore          controllers.TransController.transPageBefore
+GET         /CN/brew/Trans/transMoreinfo            controllers.TransController.transMoreinfo(id:Int)
+POST        /CN/brew/Trans/getAllTrans              controllers.TransController.getAllTrans
+GET         /CN/brew/Trans/transLinear              controllers.TransController.transLinear(id:Int)
+POST        /CN/brew/Trans/getHeader                controllers.TransController.getHeader(flavor:String)
+
+GET         /CN/brew/Meta/metaGenomePage            controllers.MetaGenomeController.metaGenomePage
+POST        /CN/brew/Meta/getAllMeta                controllers.MetaGenomeController.getAllMeta
+POST        /CN/brew/Meta/getByLocation             controllers.MetaGenomeController.getByLocation(location:String)
+GET         /CN/brew/Meta/metaInfo                  controllers.MetaGenomeController.metaInfo(sample:String)
+
+GET         /CN/brew/Strain/strainPage              controllers.StrainController.strainPage
+GET         /CN/brew/Strain/srainInfoById           controllers.StrainController.srainInfoById(id:Int)
+POST        /CN/brew/Strain/getAllStrain            controllers.StrainController.getAllStrain
+POST        /CN/brew/Strain/searchStrain            controllers.StrainController.searchStrain
+
+GET         /CN/brew/Pac/pacPage                    controllers.PacController.pacPage
+GET         /CN/brew/Pac/radar                      controllers.PacController.radar
+POST        /CN/brew/Pac/getAllSample               controllers.PacController.getAllSample
+POST        /CN/brew/Pac/getRadarData               controllers.PacController.getRadarData
+POST        /CN/brew/Pac/getAllPcadata              controllers.PacController.getAllPcadata
+GET         /CN/brew/Pac/pacInfo                    controllers.PacController.pacInfo(id:Int)
+GET         /CN/brew/Pac/pacInfoBySample            controllers.PacController.pacInfoBySample(sample:String)
+GET         /CN/brew/Pac/pacColumnPage              controllers.PacController.pacColumnPage(head:String)
+POST        /CN/brew/Pac/getPacColumnData           controllers.PacController.getPacColumnData(head:String)
+
+GET         /CN/brew/Fungus/fungusPage              controllers.FungusAmpliconController.fungusPage
+POST        /CN/brew/Fungus/getAllFungus            controllers.FungusAmpliconController.getAllFungus(flavor:String)
+POST        /CN/brew/Fungus/getHeader               controllers.FungusAmpliconController.getHeader(flavor:String)
+GET         /CN/brew/Fungus/fungusInfo              controllers.FungusAmpliconController.fungusInfo(id:Int)
+GET         /CN/brew/Fungus/fungusLinear            controllers.FungusAmpliconController.fungusLinear(id:Int)
+
+
+GET         /CN/brew/Bacteria/bacteriaPage          controllers.BacteriaAmpliconController.bacteriaPage
+POST        /CN/brew/Bacteria/getAllBacteria        controllers.BacteriaAmpliconController.getAllBacteria(flavor:String)
+POST        /CN/brew/Bacteria/getHeader             controllers.BacteriaAmpliconController.getHeader(flavor:String)
+GET         /CN/brew/Bacteria/bacteriaInfo          controllers.BacteriaAmpliconController.bacteriaInfo(id:Int)
+GET         /CN/brew/Bacteria/bacteriaLinear        controllers.BacteriaAmpliconController.bacteriaLinear(id:Int)
+GET         /CN/brew/Download/downloadPage          controllers.BacteriaAmpliconController.downloadPage
+GET         /CN/brew/Download/downloadAmp           controllers.DownloadController.downloadAmp(file:String)
+
+GET         /CN/brew/Blast/moreInfoByGeneid         controllers.BacteriaAmpliconController.moreInfoByGeneid(geneid:String)
+
+GET         /CN/brew/Blast/blastBefore              controllers.BlastController.blastBefore
+POST        /CN/brew/Blast/blastRun                 controllers.BlastController.blastRun
+GET         /CN/brew/Blast/blastResultBefore        controllers.BlastController.blastResultBefore(path:String,types:String)
+POST        /CN/brew/Blast/blastResult              controllers.BlastController.blastResult(path:String,types:String)
+
+POST        /CN/brew/Flavor/getData                 controllers.FlavorController.getData(flavor:String)
+GET         /CN/brew/Flavor/flavorInfo              controllers.FlavorController.flavorInfo(id:Int)
+POST        /CN/brew/Flavor/flavorCloumn            controllers.FlavorController.flavorCloumn(id:Int)
+
+
+GET         /CN/brew/Introduce/intro                controllers.IntroController.intro
+GET         /CN/brew/Introduce/directorPage         controllers.IntroController.directorPage
+
+
+GET         /CN/brew/Map/map                        controllers.MapController.mapPage
+GET         /CN/brew/Map/getChinaJson               controllers.MapController.getChinaJson
+
+GET         /insertTrans                            controllers.TransController.insertTrans
+
+GET         /fungus/insertFungusJiangxiang          controllers.FungusAmpliconController.insertFungusJiangxiang
+GET         /fungus/insertFungusMixiang             controllers.FungusAmpliconController.insertFungusMixiang
+GET         /fungus/insertFungusNongxiang           controllers.FungusAmpliconController.insertFungusNongxiang
+GET         /fungus/insertFungusQingxiang           controllers.FungusAmpliconController.insertFungusQingxiang
+
+
+GET         /bacteria/insertFungusJiangxiang        controllers.BacteriaAmpliconController.insertFungusJiangxiang
+GET         /bacteria/insertFungusMixiang           controllers.BacteriaAmpliconController.insertFungusMixiang
+GET         /bacteria/insertFungusNongxiang         controllers.BacteriaAmpliconController.insertFungusNongxiang
+GET         /bacteria/insertFungusQingxiang         controllers.BacteriaAmpliconController.insertFungusQingxiang
+
+
+GET         /flavor/insertJiangxiang                controllers.FlavorController.insertJiangxiang
+GET         /flavor/insertQingxiang                 controllers.FlavorController.insertQingxiang
+
+
+GET         /downloadBlastByRange                   controllers.DownloadController.downloadBlastByRange(name:String,range:String,blastType:String)
+GET         /downloadBlastByName                    controllers.DownloadController.downloadBlastByName(name:String,blastType:String)
+
+
+
+GET         /getSeq                                 controllers.BlastController.getSeq
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file                           controllers.Assets.versioned(path="/public", file: Asset)
+
+      

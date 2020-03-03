@@ -1,0 +1,33 @@
+@cn.page.main("样品理化数据") {
+
+    @cn.flavor.text("样品理化数据")
+
+    <script>
+
+            $(function () {
+
+                new Vue({
+                    el: "#table",
+                    data: {
+                        ths: {
+                            sample:"样品",
+                            info:"取样信息",
+                            ethanol:"乙醇（g/kg）",
+                            lactic:"乳酸（g/kg）",
+                            sugar:"还原糖",
+                            ph:"pH",
+                            acetic:"乙酸（g/kg）",
+                            moisture:"水分（%）",
+                            backup1:"备份1",
+                            backup2:"备份2"
+                            }
+                    }
+                });
+
+                axios.post("@routes.FlavorController.getAllPcdata").then((data) => {
+                    $("#table").bootstrapTable({data: data.data})
+                });
+
+            })
+    </script>
+}
